@@ -40,25 +40,17 @@ EXAMPLE_JSON = """{
 
 
 def build_messages(ingredients: str, diet: str | None) -> list[dict]:
-    diet_line = f"\nDietary restriction: all recipes must be {diet}." if diet else ""
-    system = (
-        "You are a helpful cooking assistant. You reply ONLY with a single valid "
-        "JSON object matching this exact shape (no markdown, no prose):\n"
-        f"{EXAMPLE_JSON}\n"
-        "difficulty is one of Easy, Medium, Hard. calories is an integer; protein "
-        "and carbs are strings like \"12g\". Nutrition values are rough per-serving "
-        "estimates, not exact."
-    )
+    restriction = diet if diet else "none"
     user = (
-        "Generate 2-3 recipe suggestions that primarily use these ingredients "
-        "(common pantry staples like salt, pepper, oil, water may be assumed): "
-        f"{ingredients}.{diet_line}\n"
-        "Return the result as the json object described above."
+        "Act as private chef advisor and nutritionist to me and tell me based on "
+        f"these ingredients I have ({ingredients}) and my dietary restrictions is "
+        f"({restriction}) generate 2 to 3 recipes based on my provided ingredients "
+        "and tell me the estimated cooking time and difficulty level and also "
+        "provide me basic nutritional information (calories, protein, carbs).\n\n"
+        "Format your response in a json structure:\n"
+        f"{EXAMPLE_JSON}"
     )
-    return [
-        {"role": "system", "content": system},
-        {"role": "user", "content": user},
-    ]
+    return [{"role": "user", "content": user}]
 
 
 def generate_recipes(ingredients: str, diet: str | None = None) -> RecipeResponse:
