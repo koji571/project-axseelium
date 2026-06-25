@@ -43,7 +43,10 @@ export default function App() {
           rows={3}
           placeholder="pasta, garlic, butter, parmesan"
           value={ingredients}
-          onChange={(e) => setIngredients(e.target.value)}
+          onChange={(e) => {
+            setIngredients(e.target.value);
+            if (error) setError("");
+          }}
         />
 
         <label htmlFor="diet">Dietary restriction (optional)</label>
