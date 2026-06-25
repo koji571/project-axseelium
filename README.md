@@ -25,6 +25,6 @@ npm install && npm run dev    # http://localhost:5173
 
 Frontend posts `{ ingredients, diet }` to `POST /api/recipes`. The backend
 validates input (Pydantic), then asks DeepSeek (`deepseek-v4-flash`) for recipes
-using a **forced tool call** whose schema is the response schema — so the model returns
-structured data instead of free-form JSON we'd have to parse defensively. See
+using **JSON output mode** (`response_format`) — so the model returns one valid
+JSON object instead of free-form text we'd have to parse defensively. See
 `receipe-backend/README.md` for the why.

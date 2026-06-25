@@ -6,10 +6,12 @@ OpenAI-compatible, so we use the OpenAI SDK pointed at `api.deepseek.com`.
 
 ## Why it returns reliable JSON
 
-We don't ask the LLM for JSON in prose and parse the result. We define a **tool**
-whose input schema is our response schema (`app/llm.py`) and force the model to
-call it (`tool_choice`). The reply is already structured; Pydantic validates it as
-a final guard. That removes the usual "model wrapped JSON in ```fences```" failure.
+We use DeepSeek's **JSON output mode** (`response_format={"type":"json_object"}`),
+which constrains the model to emit one valid JSON object. Per DeepSeek's docs the
+prompt includes the word "json" and an example of the target shape (`app/llm.py`).
+Pydantic validates the parsed object as a final guard. (deepseek-v4-flash is a
+thinking model and rejects forced `tool_choice`, so JSON mode — not function
+calling — is the structured-output path here.)
 
 ## Run
 
