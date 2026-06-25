@@ -33,6 +33,6 @@ def recipes(req: RecipeRequest) -> RecipeResponse:
     try:
         return generate_recipes(req.ingredients, req.diet)
     except KeyError:
-        raise HTTPException(500, "Server is missing ANTHROPIC_API_KEY")
+        raise HTTPException(500, "Server is missing DEEPSEEK_API_KEY")
     except Exception as e:  # network error, malformed model output, etc.
         raise HTTPException(502, f"Failed to generate recipes: {e}")

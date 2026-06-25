@@ -1,7 +1,8 @@
 # Recipe Backend (FastAPI)
 
-Validates an ingredients list, asks an Anthropic model for 2-3 recipes, and
-returns them as structured JSON.
+Validates an ingredients list, asks a DeepSeek model (`deepseek-v4-flash`) for
+2-3 recipes, and returns them as structured JSON. DeepSeek's API is
+OpenAI-compatible, so we use the OpenAI SDK pointed at `api.deepseek.com`.
 
 ## Why it returns reliable JSON
 
@@ -16,7 +17,7 @@ a final guard. That removes the usual "model wrapped JSON in ```fences```" failu
 cd receipe-backend
 python3 -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
-cp .env.example .env          # then put your ANTHROPIC_API_KEY in .env
+cp .env.example .env          # then put your DEEPSEEK_API_KEY in .env
 uvicorn app.main:app --reload --port 8000
 ```
 
